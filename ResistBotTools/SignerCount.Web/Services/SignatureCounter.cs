@@ -37,28 +37,7 @@ namespace SignerCount.Web.Services
             return signCounts.Sum() - 1;
         }
 
-        public async Task<int> GetPreviousDayCount()
-        {
-            var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
-            var response = _client.MakeCall(request);
-            var content = _client.GetResponseContent(await response);
-
-            HtmlDocument page = new HtmlDocument();
-            page.LoadHtml(content);
-
-            var elements = page
-                .DocumentNode
-                .Descendants()
-                .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
-
-            var signCounts = elements.Select(element => int.Parse(element.InnerHtml));
-
-            var yesterdayElements = signCounts.ToList().GetRange(2, 2);
-
-            return yesterdayElements.Sum();
-        }
-
-        public async Task<int> CountDayOnIndex(int index)
+        public async Task<int> GetCountOnDayIndex(int index)
         {
             var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
             var response = _client.MakeCall(request);

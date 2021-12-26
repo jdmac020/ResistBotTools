@@ -33,7 +33,7 @@ namespace SignerCount.Test
             restClient.GetResponseContent(testResponse).Returns(_testHtml);
             var counter = new SignatureCounter(restClient);
 
-            var result = await counter.GetPreviousDayCount();
+            var result = await counter.GetCountOnDayIndex(2);
 
             result.ShouldBe(42);
         }
@@ -47,7 +47,7 @@ namespace SignerCount.Test
             restClient.GetResponseContent(testResponse).Returns(_testHtml);
             var counter = new SignatureCounter(restClient);
 
-            var result = await counter.CountDayOnIndex(4);
+            var result = await counter.GetCountOnDayIndex(4);
 
             result.ShouldBe(19);
         }
