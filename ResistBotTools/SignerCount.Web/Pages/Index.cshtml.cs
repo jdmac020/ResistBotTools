@@ -24,7 +24,7 @@ namespace SignerCount.Web.Pages
 
         public async Task OnGet()
         {
-            TotalSignatures = await _counter.GetPage();
+            TotalSignatures = await _counter.GetTotalCount();
         }
     }
 }
