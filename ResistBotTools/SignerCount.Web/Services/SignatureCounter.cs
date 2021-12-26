@@ -55,7 +55,27 @@ namespace SignerCount.Web.Services
 
             var yesterdayElements = signCounts.ToList().GetRange(2, 2);
 
-            // Rather than invest time in trying to isolate this, we will just deduct it's single signer
+            return yesterdayElements.Sum();
+        }
+
+        public async Task<int> CountDayOnIndex(int index)
+        {
+            var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
+            var response = _client.MakeCall(request);
+            var content = _client.GetResponseContent(await response);
+
+            HtmlDocument page = new HtmlDocument();
+            page.LoadHtml(content);
+
+            var elements = page
+                .DocumentNode
+                .Descendants()
+                .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
+
+            var signCounts = elements.Select(element => int.Parse(element.InnerHtml));
+
+            var yesterdayElements = signCounts.ToList().GetRange(index, 2);
+
             return yesterdayElements.Sum();
         }
     }
