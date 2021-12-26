@@ -25,6 +25,9 @@ jobs:
       - name: Navigate to Solution
         run: cd ../ResistBotTools
 
+      - name: tell me where I am
+        run: echo %cd%
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
