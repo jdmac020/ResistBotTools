@@ -22,15 +22,21 @@ namespace SignerCount.Web.Services
         {
             await GetPage();
 
-            var elements = _page
-                .DocumentNode
-                .Descendants()
-                .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
-
-            var signCounts = elements.Select(element => int.Parse(element.InnerHtml));
+            var signCounts = GetSignerCountsByPetitionElement();
 
             // Rather than invest time in trying to isolate this, we will just deduct it's single signer
             return signCounts.Sum() - 1;
+        }
+
+        public async Task<int> GetCountOnDayIndex(int index)
+        {
+            await GetPage();
+
+            var signCounts = GetSignerCountsByPetitionElement();
+
+            var yesterdayElements = signCounts.ToList().GetRange(index, 2);
+
+            return yesterdayElements.Sum();
         }
 
         private async Task GetPage()
@@ -48,20 +54,14 @@ namespace SignerCount.Web.Services
             }
         }
 
-        public async Task<int> GetCountOnDayIndex(int index)
+        private IEnumerable<int> GetSignerCountsByPetitionElement()
         {
-            await GetPage();
-
             var elements = _page
                 .DocumentNode
                 .Descendants()
                 .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
 
-            var signCounts = elements.Select(element => int.Parse(element.InnerHtml));
-
-            var yesterdayElements = signCounts.ToList().GetRange(index, 2);
-
-            return yesterdayElements.Sum();
+            return elements.Select(element => int.Parse(element.InnerHtml));
         }
     }
 }
