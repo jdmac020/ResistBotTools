@@ -28,6 +28,9 @@ jobs:
       - name: tell me where I am
         run: echo $pwd
 
+      - name: tell me what is here
+        run: ls
+
       - name: Build with dotnet
         run: dotnet build ./ResistBotTools.sln --configuration Release
 
