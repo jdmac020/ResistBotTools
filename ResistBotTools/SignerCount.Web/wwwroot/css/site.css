@@ -69,3 +69,27 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*custom css*/
+
+.grid-container {
+    display: grid;
+    margin: 1em;
+    grid-gap: 1em;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: min-content;
+    justify-content: center;
+}
+
+.grid-header {
+    grid-row: 1;
+}
+
+.grid-footer {
+    grid-row: 3;
+    font-size: small;
+}
+
+.grid-item-header {
+    font-weight: bold;
+}

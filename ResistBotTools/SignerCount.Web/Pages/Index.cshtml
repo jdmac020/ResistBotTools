@@ -5,6 +5,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Today's Signer Count</h1>
-    <p>@Model.TotalSignatures</p>
+    <div class="grid-container">
+        <h1 class="grid-header">Key Stats</h1>
+        <div>
+            <div class="grid-item-header">Total of All Letters Sent:</div>
+            <div>@Model.TotalSignatures</div>
+        </div>
+        <p class="grid-footer">as of @DateTime.Now</p>
+    </div>
 </div>
