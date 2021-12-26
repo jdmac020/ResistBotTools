@@ -25,17 +25,11 @@ jobs:
       - name: Navigate to Solution
         run: cd ../ResistBotTools/
 
-      - name: tell me where I am
-        run: echo $pwd
-
-      - name: tell me what is here
-        run: ls
-
       - name: Build with dotnet
         run: dotnet build ./ResistBotTools/ResistBotTools.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ./ResistBotTools/ResistBotTools.sln -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
