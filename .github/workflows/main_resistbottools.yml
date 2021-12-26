@@ -25,11 +25,11 @@ jobs:
       - name: Navigate to Solution
         run: cd ../ResistBotTools/
 
-      - name: Build with dotnet
-        run: dotnet build ./ResistBotTools/ResistBotTools.sln --configuration Release
+      - name: Build & test with dotnet
+        run: dotnet test ./ResistBotTools/ResistBotTools.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ./ResistBotTools/ResistBotTools.sln -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ./ResistBotTools/SignerCount.Web/SignerCount.Web.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
