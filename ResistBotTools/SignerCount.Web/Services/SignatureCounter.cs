@@ -11,6 +11,7 @@ namespace SignerCount.Web.Services
     public class SignatureCounter
     {
         private ICustomRestClient _client;
+        private HtmlDocument _page;
 
         public SignatureCounter(ICustomRestClient restClient)
         {
@@ -19,14 +20,9 @@ namespace SignerCount.Web.Services
 
         public async Task<int> GetTotalCount()
         {
-            var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
-            var response = _client.MakeCall(request);
-            var content = _client.GetResponseContent(await response);
+            await GetPage();
 
-            HtmlDocument page = new HtmlDocument();
-            page.LoadHtml(content);
-
-            var elements = page
+            var elements = _page
                 .DocumentNode
                 .Descendants()
                 .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
@@ -37,16 +33,26 @@ namespace SignerCount.Web.Services
             return signCounts.Sum() - 1;
         }
 
+        private async Task GetPage()
+        {
+            if (_page == null || !_page.DocumentNode.HasChildNodes)
+            {
+                var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
+                var response = _client.MakeCall(request);
+                var content = _client.GetResponseContent(await response);
+
+                HtmlDocument page = new HtmlDocument();
+                page.LoadHtml(content);
+
+                _page = page;
+            }
+        }
+
         public async Task<int> GetCountOnDayIndex(int index)
         {
-            var request = new RestRequest(new Uri("https://resist.bot/go/jdmac020"));
-            var response = _client.MakeCall(request);
-            var content = _client.GetResponseContent(await response);
+            await GetPage();
 
-            HtmlDocument page = new HtmlDocument();
-            page.LoadHtml(content);
-
-            var elements = page
+            var elements = _page
                 .DocumentNode
                 .Descendants()
                 .Where(node => node.OuterHtml.Contains("<p class=\"Petition_signCount") && node.Name == "p");
