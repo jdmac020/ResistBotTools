@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Navigate to Solution
-        run: cd ../ResistBotTools
+        run: cd ../ResistBotTools/ResistBotTools
 
       - name: tell me where I am
         run: echo $pwd
