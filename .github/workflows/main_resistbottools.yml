@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Navigate to Solution
-        run: cd ../ResistBotTools/ResistBotTools
+        run: cd ../ResistBotTools/
 
       - name: tell me where I am
         run: echo $pwd
@@ -32,7 +32,7 @@ jobs:
         run: ls
 
       - name: Build with dotnet
-        run: dotnet build ./ResistBotTools.sln --configuration Release
+        run: dotnet build ./ResistBotTools/ResistBotTools.sln --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
