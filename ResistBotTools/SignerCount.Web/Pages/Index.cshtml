@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Stats";
 }
 
 <div class="text-center">
@@ -11,6 +11,14 @@
             <div class="grid-item-header">Total of All Letters Sent:</div>
             <div>@Model.TotalSignatures</div>
         </div>
-        <p class="grid-footer">as of @DateTime.UtcNow UTC</p>
+        <div>
+            <div class="grid-item-header">Total of Yesterday's Letters Sent:</div>
+            <div>@Model.YesterdayCount</div>
+        </div>
+        <div>
+            <div class="grid-item-header">Total of Day Before Yesterday's Letters Sent:</div>
+            <div>@Model.DayBeforeYesterdayCount</div>
+        </div>
+        <div class="grid-footer">Counts as of @DateTime.UtcNow UTC</div>
     </div>
 </div>

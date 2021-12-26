@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SignerCount.Web.Services;
@@ -12,6 +8,8 @@ namespace SignerCount.Web.Pages
     public class IndexModel : PageModel
     {
         public int TotalSignatures { get; private set; }
+        public int YesterdayCount { get; private set; }
+        public int DayBeforeYesterdayCount { get; private set; }
 
         private readonly ILogger<IndexModel> _logger;
         private readonly SignatureCounter _counter;
@@ -24,7 +22,13 @@ namespace SignerCount.Web.Pages
 
         public async Task OnGet()
         {
-            TotalSignatures = await _counter.GetPage();
+            var total = _counter.GetTotalCount();
+            var yesterday = _counter.GetCountOnDayIndex(2);
+            var dayBeforeYesterday = _counter.GetCountOnDayIndex(4);
+
+            TotalSignatures = await total;
+            YesterdayCount = await yesterday;
+            DayBeforeYesterdayCount = await dayBeforeYesterday;
         }
     }
 }
